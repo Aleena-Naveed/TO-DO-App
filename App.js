@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ScrollView, TouchableOpacity } from 'react-native';
-import CustomButton from './components/ButtonComponent';
+import CustomButton from './components/ButtonComponent'; 
 
 export default function App() {
   const [getText, setText] = useState('');
@@ -19,19 +19,8 @@ export default function App() {
     setList(List =>getList.filter(item => item.key != itemKey));
   }
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <TextInput
-          style={styles.TextStyle}
-          placeholder="Enter Item"
-          onChangeText={text => setText(text)}
-          value={getText}
-        />
-        <CustomButton add={addItem} text="Enter" color="orange" disabled={getText.length <= 0} />
-      </View>
-      <View style={styles.ScrollView}>
-        <ScrollView>
+  const scrollView = (
+    <ScrollView style={styles.ScrollView}>
           {getList.map((item, index) => 
           <TouchableOpacity
           key={item.key}
@@ -49,7 +38,26 @@ export default function App() {
           </TouchableOpacity>
           )}
         </ScrollView>
+  );
+
+  const emptyScrollView = (
+    <View style={{paddingTop: 30}}>
+      <Text style={{fontSize: 20, fontStyle: 'italic', color: "grey"}}>No ToDo Items, Hurray!</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.innerContainer}>
+        <TextInput
+            style={styles.TextStyle}
+            placeholder="Enter Item"
+            onChangeText={text => setText(text)}
+            value={getText}
+        />  
+        <CustomButton add={addItem} text="Enter" color="orange" disabled={getText.length <= 0} />
       </View>
+      {getList.length <= 0 ? emptyScrollView : scrollView}
     </View>
   );
 }
@@ -67,12 +75,12 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   TextStyle: {
-    borderWidth: 2,
-    borderRadius: 50,
-    width: "70%",
+    borderBottomWidth: 2,
+    width: "65%",
     padding: 10
   },
   ScrollView: {
+    paddingTop: 20,
     width: "100%"
   },
   scrollViewItem: {

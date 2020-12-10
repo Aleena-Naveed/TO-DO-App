@@ -14,6 +14,11 @@ export default function App() {
       ]);
      setText('');
   }
+
+  const removeItem = (itemKey) =>{
+    setList(List =>getList.filter(item => item.key != itemKey));
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -34,9 +39,13 @@ export default function App() {
           <TouchableOpacity
           key={item.key}
           activeOpacity= {0.5}
+          onPress= {() => removeItem(item.key)}
           >
             <View style={styles.scrollViewItem} >
               <Text style={styles.ScrollText}>{item.data}</Text>
+              <View style={{backgroundColor: 'grey', padding: 5, borderRadius:50}}>
+                <Text style={styles.crossText}>X</Text>
+              </View>
             </View>
           </TouchableOpacity>
           )}
@@ -51,24 +60,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 70
+    padding: 80,
   },
   innerContainer: {
     flexDirection: "row",
     justifyContent: 'space-between',
+    width: "100%"
   },
   TextStyle: {
     borderWidth: 2,
     borderRadius: 50,
-    width: "60%",
+    width: "80%",
     padding: 10
   },
   ScrollView: {
     width: "100%"
   },
   scrollViewItem: {
-    width: "80%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
     backgroundColor: "orange",
     alignSelf: 'center',
     padding: 10,
@@ -79,5 +90,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontStyle: 'italic',
     color: 'white'
+  },
+  crossText: {
+    fontSize: 16,
+    color: 'white',
   }
 });

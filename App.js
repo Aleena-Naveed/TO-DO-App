@@ -43,7 +43,8 @@ export default function App() {
           >
             <View style={styles.scrollViewItem} >
               <Text style={styles.ScrollText}>{item.data}</Text>
-              <View style={{backgroundColor: 'grey', padding: 5, borderRadius:50}}>
+              <View 
+                style={styles.crosstextContainer}>
                 <Text style={styles.crossText}>X</Text>
               </View>
             </View>
@@ -91,8 +92,17 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: 'white'
   },
+  crosstextContainer: {
+    backgroundColor: 'white', 
+    padding: 5, 
+    borderRadius:50,
+    width: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   crossText: {
     fontSize: 16,
-    color: 'white',
+    color: 'red',
+    fontWeight: 'bold',
   }
 });

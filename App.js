@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ScrollView, TouchableOpacity } from 'react-native';
+import CustomButton from './components/ButtonComponent';
 
-const CustomButton = (props) => {
-  var btnclr = props.color != undefined? props.color : 'blue';
-  return(
-    <TouchableOpacity activeOpacity={0.5} onPress={props.add}>
-          <View style={ {...styles.buttonContainer, backgroundColor: btnclr }}>
-            <Text style={styles.buttonText}>
-              {props.text}
-            </Text>
-          </View>
-    </TouchableOpacity>
-  );
-}
 export default function App() {
   const [getText, setText] = useState('');
   const [getList, setList] = useState([]);
@@ -39,17 +28,17 @@ export default function App() {
           onChangeText={text => setText(text)}
           value={getText}
         />
-        <CustomButton add={addItem} text="Enter" color="orange" />
+        <CustomButton add={addItem} text="Enter" color="orange" disabled={getText.length <= 0} />
       </View>
       <View style={styles.ScrollView}>
         <ScrollView>
-          {getList.map((item) => 
+          {getList.map((item, index) => 
           <TouchableOpacity
           key={item.key}
           activeOpacity= {0.5}
           >
             <View style={styles.scrollViewItem} >
-              <Text style={styles.ScrollText}>{item.data}</Text>
+          <Text style={styles.ScrollText}>{index+1}#: {item.data}</Text>
               <TouchableOpacity onPress= {() => removeItem(item.key)}>
                 <View 
                 style={styles.crosstextContainer}>
@@ -114,13 +103,5 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
   },
-  buttonContainer:{ 
-    paddingHorizontal: 20, 
-    padding: 10, 
-    borderRadius: 50,
-},
-buttonText:{ 
-    fontSize: 16,
-    color:'white'
-}
+  
 });

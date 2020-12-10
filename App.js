@@ -1,7 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ScrollView, TouchableOpacity } from 'react-native';
 
+const CustomButton = (props) => {
+  var btnclr = props.color != undefined? props.color : 'blue';
+  return(
+    <TouchableOpacity activeOpacity={0.5} onPress={props.add}>
+          <View style={ {...styles.buttonContainer, backgroundColor: btnclr }}>
+            <Text style={styles.buttonText}>
+              {props.text}
+            </Text>
+          </View>
+    </TouchableOpacity>
+  );
+}
 export default function App() {
   const [getText, setText] = useState('');
   const [getList, setList] = useState([]);
@@ -28,10 +39,7 @@ export default function App() {
           onChangeText={text => setText(text)}
           value={getText}
         />
-        <Button 
-          title="ADD"
-          onPress={addItem}
-        />
+        <CustomButton add={addItem} text="Enter" color="orange" />
       </View>
       <View style={styles.ScrollView}>
         <ScrollView>
@@ -39,14 +47,15 @@ export default function App() {
           <TouchableOpacity
           key={item.key}
           activeOpacity= {0.5}
-          onPress= {() => removeItem(item.key)}
           >
             <View style={styles.scrollViewItem} >
               <Text style={styles.ScrollText}>{item.data}</Text>
-              <View 
+              <TouchableOpacity onPress= {() => removeItem(item.key)}>
+                <View 
                 style={styles.crosstextContainer}>
                 <Text style={styles.crossText}>X</Text>
               </View>
+            </TouchableOpacity>
             </View>
           </TouchableOpacity>
           )}
@@ -71,7 +80,7 @@ const styles = StyleSheet.create({
   TextStyle: {
     borderWidth: 2,
     borderRadius: 50,
-    width: "80%",
+    width: "70%",
     padding: 10
   },
   ScrollView: {
@@ -104,5 +113,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'red',
     fontWeight: 'bold',
-  }
+  },
+  buttonContainer:{ 
+    paddingHorizontal: 20, 
+    padding: 10, 
+    borderRadius: 50,
+},
+buttonText:{ 
+    fontSize: 16,
+    color:'white'
+}
 });
